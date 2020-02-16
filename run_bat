@@ -1,28 +1,15 @@
 #!/bin/bash -e
 
-# export PATH=$PATH:~/local/riscvv08/
-
 # riscv64-unknown-elf-gcc -o hello hello.c
 # riscv64-unknown-elf-readelf -a hello | less
 # riscv64-unknown-elf-objdump -d hello | less
 # spike pk hello
 # exit
 
-# BAK_PATH=${PATH}
-# export PATH=~/risc-v/riscv-gnu-toolchain_rvv-0.8.x/build/bin/bin/:$PATH
-export PATH= ~/local/riscvv08/gnu/bin/:$PATH
-riscv64-unknown-elf-as -march=rv64gcv -o bcd2ascii.o bcd2ascii.s
-# 
-# export PATH=${BAK_PATH}
-riscv64-unknown-elf-gcc -Wall  main_bcd2a.c -o bcd2a bcd2ascii.o
-# 
-# export PATH=~/local/riscvv08/binutils/bin/:$PATH
-# riscv64-unknown-elf-objdump -d bcd2a | less
-
-# # ./install_spike.sh
-# export PATH=~/local/riscvv08/spike/bin/:$PATH
-# spike --isa=RV64IMAFDCV -pk bcd2a
+export PATH=~/local/riscvv08/gnu/bin/:$PATH
+make
+riscv64-unknown-elf-objdump -d bcd2a | less
+~/local/riscvv08/spike/bin/spike --isa=RV64gcV \
+        ~/local/riscvv08/pk/riscv64-unknown-elf/bin/pk bcd2a
 
 exit
-
-#make
